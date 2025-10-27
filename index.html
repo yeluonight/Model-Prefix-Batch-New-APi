@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>模型前缀生成器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .input-section {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+            -webkit-appearance: none;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .model-input-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .model-input-container input {
+            flex: 1;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn-add {
+            background: #667eea;
+            color: white;
+            min-width: 80px;
+        }
+
+        .btn-add:active {
+            transform: scale(0.95);
+            background: #5568d3;
+        }
+
+        .model-list {
+            margin-top: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .model-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            transition: all 0.2s;
+        }
+
+        .model-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .model-item span {
+            flex: 1;
+            word-break: break-all;
+            font-size: 14px;
+        }
+
+        .btn-delete {
+            background: #ff4757;
+            color: white;
+            padding: 6px 16px;
+            font-size: 14px;
+            min-width: 60px;
+            margin-left: 10px;
+        }
+
+        .btn-delete:active {
+            background: #ee5a6f;
+            transform: scale(0.95);
+        }
+
+        .output-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .output-box {
+            margin-bottom: 25px;
+        }
+
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .output-header h3 {
+            color: #667eea;
+            font-size: 16px;
+        }
+
+        .btn-copy {
+            background: #2ecc71;
+            color: white;
+            padding: 8px 20px;
+            font-size: 14px;
+        }
+
+        .btn-copy:active {
+            background: #27ae60;
+            transform: scale(0.95);
+        }
+
+        .btn-copy.copied {
+            background: #95a5a6;
+        }
+
+        .output-content {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            min-height: 80px;
+            max-height: 250px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            word-break: break-all;
+            white-space: pre-wrap;
+        }
+
+        .empty-hint {
+            color: #999;
+            font-style: italic;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .btn {
+                padding: 10px 18px;
+                font-size: 14px;
+            }
+        }
+
+        /* 滚动条美化 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5568d3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 模型前缀生成器</h1>
+
+        <div class="input-section">
+            <label for="prefix">前缀</label>
+            <input type="text" id="prefix" placeholder="请输入前缀，例如：prefix-">
+        </div>
+
+        <div class="input-section">
+            <label>模型名称</label>
+            <div class="model-input-container">
+                <input type="text" id="modelInput" placeholder="请输入模型名称，例如：gpt-3.5-turbo-0125">
+                <button class="btn btn-add" onclick="addModel()">添加</button>
+            </div>
+            <div class="model-list" id="modelList"></div>
+        </div>
+
+        <div class="output-section">
+            <div class="output-box">
+                <div class="output-header">
+                    <h3>📋 加前缀的模型名列表</h3>
+                    <button class="btn btn-copy" onclick="copyModels()">复制</button>
+                </div>
+                <div class="output-content" id="modelOutput">
+                    <span class="empty-hint">暂无数据</span>
+                </div>
+            </div>
+
+            <div class="output-box">
+                <div class="output-header">
+                    <h3>📝 JSON 格式</h3>
+                    <button class="btn btn-copy" onclick="copyJSON()">复制</button>
+                </div>
+                <div class="output-content" id="jsonOutput">
+                    <span class="empty-hint">暂无数据</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let models = [];
+
+        // 页面加载时从 localStorage 恢复数据
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedPrefix = localStorage.getItem('prefix');
+            const savedModels = localStorage.getItem('models');
+
+            if (savedPrefix) {
+                document.getElementById('prefix').value = savedPrefix;
+            }
+
+            if (savedModels) {
+                models = JSON.parse(savedModels);
+                updateDisplay();
+            }
+        });
+
+        // 监听前缀输入变化
+        document.getElementById('prefix').addEventListener('input', () => {
+            const prefix = document.getElementById('prefix').value;
+            localStorage.setItem('prefix', prefix);
+            updateDisplay();
+        });
+
+        // 支持回车添加模型
+        document.getElementById('modelInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addModel();
+            }
+        });
+
+        function addModel() {
+            const input = document.getElementById('modelInput');
+            const modelName = input.value.trim();
+
+            if (modelName && !models.includes(modelName)) {
+                models.push(modelName);
+                input.value = '';
+                saveAndUpdate();
+            }
+        }
+
+        function deleteModel(index) {
+            models.splice(index, 1);
+            saveAndUpdate();
+        }
+
+        function saveAndUpdate() {
+            localStorage.setItem('models', JSON.stringify(models));
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            const prefix = document.getElementById('prefix').value;
+            const modelListEl = document.getElementById('modelList');
+            const modelOutputEl = document.getElementById('modelOutput');
+            const jsonOutputEl = document.getElementById('jsonOutput');
+
+            // 更新模型列表
+            if (models.length === 0) {
+                modelListEl.innerHTML = '<div class="empty-hint" style="padding: 20px; text-align: center;">暂无模型，请添加</div>';
+            } else {
+                modelListEl.innerHTML = models.map((model, index) => `
+                    <div class="model-item">
+                        <span>${model}</span>
+                        <button class="btn btn-delete" onclick="deleteModel(${index})">删除</button>
+                    </div>
+                `).join('');
+            }
+
+            // 更新加前缀的模型名列表
+            if (models.length === 0) {
+                modelOutputEl.innerHTML = '<span class="empty-hint">暂无数据</span>';
+            } else {
+                const prefixedModels = models.map(model => prefix + model);
+                modelOutputEl.textContent = prefixedModels.join(',');
+            }
+
+            // 更新 JSON 输出
+            if (models.length === 0) {
+                jsonOutputEl.innerHTML = '<span class="empty-hint">暂无数据</span>';
+            } else {
+                const jsonObj = {};
+                models.forEach(model => {
+                    jsonObj[prefix + model] = model;
+                });
+                jsonOutputEl.textContent = JSON.stringify(jsonObj, null, 2);
+            }
+        }
+
+        async function copyToClipboard(text, button) {
+            try {
+                // 优先使用现代 Clipboard API（兼容 iOS、Android）
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(text);
+                } else {
+                    // 降级方案：使用 textarea 方法（兼容旧版本）
+                    const textarea = document.createElement('textarea');
+                    textarea.value = text;
+                    textarea.style.position = 'fixed';
+                    textarea.style.left = '-999999px';
+                    textarea.style.top = '-999999px';
+                    document.body.appendChild(textarea);
+                    textarea.focus();
+                    textarea.select();
+
+                    // iOS 特殊处理
+                    if (navigator.userAgent.match(/ipad|iphone/i)) {
+                        const range = document.createRange();
+                        range.selectNodeContents(textarea);
+                        const selection = window.getSelection();
+                        selection.removeAllRanges();
+                        selection.addRange(range);
+                        textarea.setSelectionRange(0, 999999);
+                    }
+
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                }
+
+                // 按钮反馈
+                const originalText = button.textContent;
+                button.textContent = '已复制!';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            } catch (err) {
+                alert('复制失败，请手动复制');
+                console.error('复制失败:', err);
+            }
+        }
+
+        function copyModels() {
+            const prefix = document.getElementById('prefix').value;
+            const prefixedModels = models.map(model => prefix + model);
+            const text = prefixedModels.join(',');
+
+            if (text) {
+                copyToClipboard(text, event.target);
+            }
+        }
+
+        function copyJSON() {
+            const prefix = document.getElementById('prefix').value;
+            const jsonObj = {};
+            models.forEach(model => {
+                jsonObj[prefix + model] = model;
+            });
+            const text = JSON.stringify(jsonObj, null, 2);
+
+            if (models.length > 0) {
+                copyToClipboard(text, event.target);
+            }
+        }
+    </script>
+</body>
+</html>
