@@ -246,7 +246,7 @@
         <div class="input-section">
             <label>模型名称</label>
             <div class="model-input-container">
-                <input type="text" id="modelInput" placeholder="请输入模型名称，例如：gpt-3.5-turbo-0125">
+                <input type="text" id="modelInput" placeholder="输入模型名称，多个用逗号分隔，例如：gpt-4,claude-3">
                 <button class="btn btn-add" onclick="addModel()">添加</button>
             </div>
             <div class="model-list" id="modelList"></div>
@@ -309,12 +309,20 @@
 
         function addModel() {
             const input = document.getElementById('modelInput');
-            const modelName = input.value.trim();
+            const inputValue = input.value.trim();
 
-            if (modelName && !models.includes(modelName)) {
-                models.push(modelName);
-                input.value = '';
-                saveAndUpdate();
+            if (inputValue) {
+                // 按逗号分割，去除空格，过滤空字符串
+                const newModels = inputValue
+                    .split(',')
+                    .map(name => name.trim())
+                    .filter(name => name && !models.includes(name));
+
+                if (newModels.length > 0) {
+                    models.push(...newModels);
+                    input.value = '';
+                    saveAndUpdate();
+                }
             }
         }
 
