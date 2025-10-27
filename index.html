@@ -139,6 +139,15 @@
             transform: scale(0.95);
         }
 
+        .btn-clear {
+            border-radius: 4px;
+        }
+
+        .btn-clear:active {
+            background: #d32f2f !important;
+            transform: scale(0.95);
+        }
+
         .output-section {
             margin-top: 16px;
             padding-top: 12px;
@@ -244,7 +253,10 @@
         </div>
 
         <div class="input-section">
-            <label>模型名称</label>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <label style="margin-bottom: 0;">模型名称</label>
+                <button class="btn btn-clear" onclick="clearAllModels()" style="padding: 2px 8px; font-size: 11px; background: #ef5350; color: white;">清空</button>
+            </div>
             <div class="model-input-container">
                 <input type="text" id="modelInput" placeholder="输入模型名称，多个用逗号分隔，例如：gpt-4,claude-3">
                 <button class="btn btn-add" onclick="addModel()">添加</button>
@@ -329,6 +341,15 @@
         function deleteModel(index) {
             models.splice(index, 1);
             saveAndUpdate();
+        }
+
+        function clearAllModels() {
+            if (models.length === 0) return;
+
+            if (confirm(`确定要清空所有 ${models.length} 个模型吗？`)) {
+                models = [];
+                saveAndUpdate();
+            }
         }
 
         function saveAndUpdate() {
