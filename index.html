@@ -249,14 +249,14 @@
 
         <div class="input-section">
             <label for="prefix">前缀</label>
-            <input type="text" id="prefix" placeholder="请输入前缀，例如：prefix-">
+            <div style="display: flex; gap: 8px;">
+                <input type="text" id="prefix" placeholder="请输入前缀，例如：prefix-" style="flex: 1;">
+                <button class="btn btn-clear" onclick="clearAll()" style="padding: 6px 12px; font-size: 13px; background: #ef5350; color: white; min-width: 50px;">清空</button>
+            </div>
         </div>
 
         <div class="input-section">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                <label style="margin-bottom: 0;">模型名称</label>
-                <button class="btn btn-clear" onclick="clearAllModels()" style="padding: 2px 8px; font-size: 11px; background: #ef5350; color: white;">清空</button>
-            </div>
+            <label>模型名称</label>
             <div class="model-input-container">
                 <input type="text" id="modelInput" placeholder="输入模型名称，多个用逗号分隔，例如：gpt-4,claude-3">
                 <button class="btn btn-add" onclick="addModel()">添加</button>
@@ -343,10 +343,21 @@
             saveAndUpdate();
         }
 
-        function clearAllModels() {
-            if (models.length === 0) return;
+        function clearAll() {
+            const hasPrefix = document.getElementById('prefix').value.trim() !== '';
+            const hasModels = models.length > 0;
 
-            if (confirm(`确定要清空所有 ${models.length} 个模型吗？`)) {
+            if (!hasPrefix && !hasModels) return;
+
+            let message = '确定要清空';
+            const items = [];
+            if (hasPrefix) items.push('前缀');
+            if (hasModels) items.push(`所有 ${models.length} 个模型`);
+            message += items.join('和') + '吗？';
+
+            if (confirm(message)) {
+                document.getElementById('prefix').value = '';
+                localStorage.setItem('prefix', '');
                 models = [];
                 saveAndUpdate();
             }
