@@ -13,112 +13,206 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
-            padding: 12px;
-            color: #333;
+            padding: 16px;
+            color: #2c3e50;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-            padding: 16px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 24px;
         }
 
         h1 {
             text-align: center;
-            color: #5c6bc0;
-            margin-bottom: 16px;
-            font-size: 20px;
-            font-weight: 500;
+            color: #34495e;
+            margin-bottom: 24px;
+            font-size: 24px;
+            font-weight: 600;
         }
 
-        .input-section {
+        .section {
+            margin-bottom: 20px;
+            padding: 16px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #495057;
             margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 3px;
+            height: 14px;
+            background: #5c7cfa;
+            border-radius: 2px;
         }
 
         label {
             display: block;
             font-weight: 500;
-            margin-bottom: 4px;
-            color: #616161;
+            margin-bottom: 6px;
+            color: #495057;
             font-size: 13px;
         }
 
-        input[type="text"] {
+        input[type="text"],
+        input[type="password"] {
             width: 100%;
-            padding: 8px 10px;
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
+            padding: 10px 12px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
             font-size: 14px;
             transition: all 0.2s;
-            -webkit-appearance: none;
+            background: white;
         }
 
-        input[type="text"]:focus {
+        input[type="text"]:focus,
+        input[type="password"]:focus {
             outline: none;
-            border-color: #5c6bc0;
-            box-shadow: 0 0 0 2px rgba(92, 107, 192, 0.1);
+            border-color: #5c7cfa;
+            box-shadow: 0 0 0 3px rgba(92, 124, 250, 0.1);
         }
 
-        .model-input-container {
+        .input-row {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             margin-bottom: 10px;
         }
 
-        .model-input-container input {
+        .input-row > div {
             flex: 1;
         }
 
         .btn {
-            padding: 6px 12px;
+            padding: 10px 18px;
             border: none;
-            border-radius: 6px;
-            font-size: 13px;
+            border-radius: 8px;
+            font-size: 14px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
             touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
         }
 
-        .btn-add {
-            background: #5c6bc0;
+        .btn-primary {
+            background: #5c7cfa;
             color: white;
-            min-width: 50px;
         }
 
-        .btn-add:active {
-            transform: scale(0.95);
-            background: #4a5ba8;
+        .btn-primary:hover {
+            background: #4c6ef5;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+
+        .btn-primary:disabled {
+            background: #adb5bd;
+            cursor: not-allowed;
+        }
+
+        .btn-success {
+            background: #51cf66;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #40c057;
+        }
+
+        .btn-success:active {
+            transform: scale(0.97);
+        }
+
+        .btn-danger {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #fa5252;
+        }
+
+        .btn-danger:active {
+            transform: scale(0.97);
+        }
+
+        .btn-small {
+            padding: 6px 14px;
+            font-size: 13px;
+        }
+
+        .status-box {
+            margin-top: 10px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .status-info {
+            background: #e7f5ff;
+            color: #1971c2;
+            border: 1px solid #a5d8ff;
+        }
+
+        .status-success {
+            background: #d3f9d8;
+            color: #2b8a3e;
+            border: 1px solid #8ce99a;
+        }
+
+        .status-error {
+            background: #ffe3e3;
+            color: #c92a2a;
+            border: 1px solid #ffa8a8;
+        }
+
+        .status-loading {
+            background: #fff3bf;
+            color: #e67700;
+            border: 1px solid #ffe066;
         }
 
         .model-list {
             margin-top: 10px;
-            max-height: 180px;
+            max-height: 200px;
             overflow-y: auto;
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            padding: 8px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 10px;
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 8px;
             align-content: flex-start;
+            background: white;
         }
 
         .model-item {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 4px 8px;
-            background: #f5f5f5;
-            border-radius: 4px;
+            padding: 6px 10px;
+            background: #f1f3f5;
+            border-radius: 6px;
             font-size: 13px;
-            transition: all 0.2s;
+            border: 1px solid #e9ecef;
         }
 
         .model-item span {
@@ -127,148 +221,166 @@
         }
 
         .btn-delete {
-            background: #ef5350;
+            background: #ff6b6b;
             color: white;
             padding: 2px 8px;
             font-size: 12px;
             border-radius: 4px;
+            border: none;
+            cursor: pointer;
         }
 
         .btn-delete:active {
-            background: #d32f2f;
-            transform: scale(0.95);
-        }
-
-        .btn-clear {
-            border-radius: 4px;
-        }
-
-        .btn-clear:active {
-            background: #d32f2f !important;
+            background: #fa5252;
             transform: scale(0.95);
         }
 
         .output-section {
-            margin-top: 16px;
-            padding-top: 12px;
-            border-top: 1px solid #e0e0e0;
+            margin-top: 20px;
         }
 
         .output-box {
-            margin-bottom: 12px;
-        }
-
-        .output-box:last-child {
-            margin-bottom: 0;
+            margin-bottom: 16px;
         }
 
         .output-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .output-header h3 {
-            color: #5c6bc0;
+            color: #495057;
             font-size: 14px;
-            font-weight: 500;
-        }
-
-        .btn-copy {
-            background: #66bb6a;
-            color: white;
-            padding: 4px 12px;
-            font-size: 12px;
-        }
-
-        .btn-copy:active {
-            background: #4caf50;
-            transform: scale(0.95);
-        }
-
-        .btn-copy.copied {
-            background: #90a4ae;
+            font-weight: 600;
         }
 
         .output-content {
-            background: #fafafa;
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            padding: 10px;
-            min-height: 60px;
-            max-height: 180px;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 12px;
+            min-height: 80px;
+            max-height: 200px;
             overflow-y: auto;
             font-family: 'Courier New', monospace;
             font-size: 13px;
-            line-height: 1.5;
+            line-height: 1.6;
             word-break: break-all;
             white-space: pre-wrap;
         }
 
         .empty-hint {
-            color: #bdbdbd;
+            color: #adb5bd;
             font-style: italic;
-            font-size: 12px;
+            font-size: 13px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
         }
 
         @media (max-width: 600px) {
             .container {
-                padding: 12px;
+                padding: 16px;
             }
 
             h1 {
-                font-size: 18px;
+                font-size: 20px;
+            }
+
+            .input-row {
+                flex-direction: column;
             }
         }
 
-        /* 滚动条美化 */
         ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+            width: 8px;
+            height: 8px;
         }
 
         ::-webkit-scrollbar-track {
-            background: #f5f5f5;
-            border-radius: 6px;
+            background: #f1f3f5;
+            border-radius: 8px;
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #bdbdbd;
-            border-radius: 6px;
+            background: #adb5bd;
+            border-radius: 8px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: #9e9e9e;
+            background: #868e96;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid #e67700;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>模型前缀生成器</h1>
+        <h1>🚀 模型前缀生成器</h1>
 
-        <div class="input-section">
-            <label for="prefix">前缀</label>
-            <div style="display: flex; gap: 8px;">
-                <input type="text" id="prefix" placeholder="请输入前缀，例如：prefix-" style="flex: 1;">
-                <button class="btn btn-clear" onclick="clearAll()" style="padding: 6px 12px; font-size: 13px; background: #ef5350; color: white; min-width: 50px;">清空</button>
+        <!-- API 获取模型区域 -->
+        <div class="section">
+            <div class="section-title">API 获取模型</div>
+            <div class="input-row">
+                <div style="flex: 2;">
+                    <label for="baseUrl">Base URL</label>
+                    <input type="text" id="baseUrl" placeholder="例如：https://api.openai.com 或 https://generativelanguage.googleapis.com">
+                </div>
+                <div style="flex: 2;">
+                    <label for="apiKey">API Key</label>
+                    <input type="password" id="apiKey" placeholder="输入您的 API Key">
+                </div>
+                <div style="display: flex; align-items: flex-end;">
+                    <button class="btn btn-primary" onclick="fetchModels()" id="fetchBtn">获取模型</button>
+                </div>
+            </div>
+            <div id="apiStatus"></div>
+        </div>
+
+        <!-- 前缀处理区域 -->
+        <div class="section">
+            <div class="section-title">前缀处理</div>
+            <div style="margin-bottom: 10px;">
+                <label for="prefix">前缀</label>
+                <input type="text" id="prefix" placeholder="请输入前缀，例如：prefix-">
+            </div>
+            <div>
+                <label>模型名称</label>
+                <div class="input-row">
+                    <input type="text" id="modelInput" placeholder="输入模型名称，多个用逗号分隔，例如：gpt-4,claude-3" style="flex: 1;">
+                    <button class="btn btn-success btn-small" onclick="addModel()">添加</button>
+                </div>
+                <div class="model-list" id="modelList"></div>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-danger btn-small" onclick="clearAll()">清空所有</button>
             </div>
         </div>
 
-        <div class="input-section">
-            <label>模型名称</label>
-            <div class="model-input-container">
-                <input type="text" id="modelInput" placeholder="输入模型名称，多个用逗号分隔，例如：gpt-4,claude-3">
-                <button class="btn btn-add" onclick="addModel()">添加</button>
-            </div>
-            <div class="model-list" id="modelList"></div>
-        </div>
-
+        <!-- 输出区域 -->
         <div class="output-section">
             <div class="output-box">
                 <div class="output-header">
-                    <h3>加前缀的模型名列表</h3>
-                    <button class="btn btn-copy" onclick="copyModels()">复制</button>
+                    <h3>📋 加前缀的模型名列表</h3>
+                    <button class="btn btn-success btn-small" onclick="copyModels()">复制</button>
                 </div>
                 <div class="output-content" id="modelOutput">
                     <span class="empty-hint">暂无数据</span>
@@ -277,8 +389,8 @@
 
             <div class="output-box">
                 <div class="output-header">
-                    <h3>JSON 格式</h3>
-                    <button class="btn btn-copy" onclick="copyJSON()">复制</button>
+                    <h3>📝 JSON 格式</h3>
+                    <button class="btn btn-success btn-small" onclick="copyJSON()">复制</button>
                 </div>
                 <div class="output-content" id="jsonOutput">
                     <span class="empty-hint">暂无数据</span>
@@ -319,6 +431,178 @@
             }
         });
 
+        // 智能处理 Base URL
+        function normalizeBaseUrl(url) {
+            url = url.trim();
+            if (!url) return { url: '', type: 'unknown' };
+
+            // 确保有协议
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                url = 'https://' + url;
+            }
+
+            // 移除末尾斜杠
+            url = url.replace(/\/+$/, '');
+
+            // 检测 API 类型
+            let type = 'openai'; // 默认 OpenAI
+
+            if (url.includes('/v1beta')) {
+                type = 'gemini';
+                // 移除 /v1beta，稍后会添加完整路径
+                url = url.replace(/\/v1beta.*$/, '');
+            } else if (!url.endsWith('/v1')) {
+                // 如果没有 /v1，添加它（OpenAI 标准）
+                url = url + '/v1';
+            }
+
+            return { url, type };
+        }
+
+        // 显示状态
+        function showStatus(message, type = 'info') {
+            const statusEl = document.getElementById('apiStatus');
+            statusEl.className = `status-box status-${type}`;
+
+            if (type === 'loading') {
+                statusEl.innerHTML = `<span class="loading-spinner"></span>${message}`;
+            } else {
+                statusEl.innerHTML = message;
+            }
+        }
+
+        // 获取模型（OpenAI 格式）
+        async function fetchOpenAIModels(baseUrl, apiKey) {
+            const response = await fetch(`${baseUrl}/models`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+
+            if (!data.data || !Array.isArray(data.data)) {
+                throw new Error('响应格式不正确，缺少 data 数组');
+            }
+
+            return data.data.map(model => model.id);
+        }
+
+        // 获取模型（Gemini 格式）
+        async function fetchGeminiModels(baseUrl, apiKey) {
+            const response = await fetch(`${baseUrl}/v1beta/models?key=${apiKey}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+
+            if (!data.models || !Array.isArray(data.models)) {
+                throw new Error('响应格式不正确，缺少 models 数组');
+            }
+
+            // Gemini 返回的模型名格式：models/gemini-pro
+            return data.models.map(model => {
+                const name = model.name || '';
+                return name.replace('models/', '');
+            }).filter(name => name);
+        }
+
+        // 主获取函数
+        async function fetchModels() {
+            const baseUrlInput = document.getElementById('baseUrl').value;
+            const apiKey = document.getElementById('apiKey').value.trim();
+            const fetchBtn = document.getElementById('fetchBtn');
+
+            // 验证输入
+            if (!baseUrlInput.trim()) {
+                showStatus('❌ 请输入 Base URL', 'error');
+                return;
+            }
+
+            if (!apiKey) {
+                showStatus('❌ 请输入 API Key', 'error');
+                return;
+            }
+
+            // 解析 URL
+            const { url: baseUrl, type } = normalizeBaseUrl(baseUrlInput);
+
+            try {
+                fetchBtn.disabled = true;
+                showStatus('正在获取模型列表...', 'loading');
+
+                let fetchedModels = [];
+
+                if (type === 'gemini') {
+                    // 直接尝试 Gemini
+                    showStatus('正在使用 Gemini API 获取模型...', 'loading');
+                    fetchedModels = await fetchGeminiModels(baseUrl, apiKey);
+                } else {
+                    // 先尝试 OpenAI，失败则尝试 Gemini
+                    try {
+                        showStatus('正在使用 OpenAI API 获取模型...', 'loading');
+                        fetchedModels = await fetchOpenAIModels(baseUrl, apiKey);
+                    } catch (openaiError) {
+                        showStatus('OpenAI 格式失败，尝试 Gemini 格式...', 'loading');
+                        // 移除 /v1 后缀，尝试 Gemini
+                        const geminiUrl = baseUrl.replace(/\/v1$/, '');
+                        fetchedModels = await fetchGeminiModels(geminiUrl, apiKey);
+                    }
+                }
+
+                if (fetchedModels.length === 0) {
+                    showStatus('⚠️ 未获取到任何模型', 'error');
+                    return;
+                }
+
+                // 添加到模型列表（去重）
+                const newModels = fetchedModels.filter(model => !models.includes(model));
+                models.push(...newModels);
+                saveAndUpdate();
+
+                showStatus(`✅ 成功获取 ${fetchedModels.length} 个模型，新增 ${newModels.length} 个`, 'success');
+
+            } catch (error) {
+                console.error('获取模型失败:', error);
+
+                let errorMsg = '❌ 获取失败：';
+
+                if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+                    errorMsg += '网络错误，可能是 CORS 跨域限制。建议：\n';
+                    errorMsg += '1. 确认 API 地址正确\n';
+                    errorMsg += '2. 使用浏览器扩展解除 CORS 限制（如 CORS Unblock）\n';
+                    errorMsg += '3. 检查 API Key 是否有效';
+                } else if (error.message.includes('401')) {
+                    errorMsg += 'API Key 无效或已过期';
+                } else if (error.message.includes('403')) {
+                    errorMsg += '无权限访问该 API';
+                } else if (error.message.includes('404')) {
+                    errorMsg += 'API 端点不存在，请检查 Base URL';
+                } else if (error.message.includes('429')) {
+                    errorMsg += 'API 请求频率超限，请稍后再试';
+                } else {
+                    errorMsg += error.message;
+                }
+
+                showStatus(errorMsg, 'error');
+            } finally {
+                fetchBtn.disabled = false;
+            }
+        }
+
         function addModel() {
             const input = document.getElementById('modelInput');
             const inputValue = input.value.trim();
@@ -346,18 +630,29 @@
         function clearAll() {
             const hasPrefix = document.getElementById('prefix').value.trim() !== '';
             const hasModels = models.length > 0;
+            const hasApiInputs = document.getElementById('baseUrl').value.trim() !== '' ||
+                                  document.getElementById('apiKey').value.trim() !== '';
 
-            if (!hasPrefix && !hasModels) return;
+            if (!hasPrefix && !hasModels && !hasApiInputs) return;
 
             let message = '确定要清空';
             const items = [];
+            if (hasApiInputs) items.push('API 配置');
             if (hasPrefix) items.push('前缀');
             if (hasModels) items.push(`所有 ${models.length} 个模型`);
-            message += items.join('和') + '吗？';
+            message += items.join('、') + '吗？';
 
             if (confirm(message)) {
+                // 清空 API 输入
+                document.getElementById('baseUrl').value = '';
+                document.getElementById('apiKey').value = '';
+                document.getElementById('apiStatus').innerHTML = '';
+
+                // 清空前缀
                 document.getElementById('prefix').value = '';
                 localStorage.setItem('prefix', '');
+
+                // 清空模型
                 models = [];
                 saveAndUpdate();
             }
@@ -376,7 +671,7 @@
 
             // 更新模型列表（标签形式）
             if (models.length === 0) {
-                modelListEl.innerHTML = '<div class="empty-hint" style="width: 100%; text-align: center; padding: 16px 0;">暂无模型，请添加</div>';
+                modelListEl.innerHTML = '<div class="empty-hint" style="width: 100%; text-align: center; padding: 20px 0;">暂无模型，请添加</div>';
             } else {
                 modelListEl.innerHTML = models.map((model, index) => `
                     <div class="model-item">
@@ -408,11 +703,11 @@
 
         async function copyToClipboard(text, button) {
             try {
-                // 优先使用现代 Clipboard API（兼容 iOS、Android）
+                // 优先使用现代 Clipboard API
                 if (navigator.clipboard && window.isSecureContext) {
                     await navigator.clipboard.writeText(text);
                 } else {
-                    // 降级方案：使用 textarea 方法（兼容旧版本）
+                    // 降级方案
                     const textarea = document.createElement('textarea');
                     textarea.value = text;
                     textarea.style.position = 'fixed';
@@ -438,11 +733,9 @@
 
                 // 按钮反馈
                 const originalText = button.textContent;
-                button.textContent = '✓';
-                button.classList.add('copied');
+                button.textContent = '✓ 已复制';
                 setTimeout(() => {
                     button.textContent = originalText;
-                    button.classList.remove('copied');
                 }, 1500);
             } catch (err) {
                 alert('复制失败，请手动复制');
